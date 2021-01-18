@@ -49,8 +49,40 @@ interface WebHookFormData extends WebHookData {
 }
 
 interface AllowedMentions {
-  parse: ('users' | 'roles' | 'everyone')[];
-  roles: number[];
-  users: number[];
-  replied_user: boolean;
+  parse?: ('users' | 'roles' | 'everyone')[];
+  roles?: number[];
+  users?: number[];
+  replied_user?: boolean;
+}
+
+interface RiverRaceData {
+  standings: Standing[];
+  seasonId: number;
+  createdDate: string;
+  sectionIndex: number;
+}
+
+interface Standing {
+  rank: number;
+  trophyChange: number;
+  clan: Clan;
+}
+
+interface Clan {
+  tag: string;
+  clanScore: number;
+  badgeId: number;
+  name: string;
+  fame: number;
+  repairPoints: number;
+  finishTime: string;
+  participants: Participant[];
+}
+
+interface Participant {
+  tag: string;
+  name: string;
+  fame: number;
+  repairPoints: number;
+  boatAttacks: number;
 }
