@@ -28,3 +28,43 @@ function updateFile(fileName: string, newBlob: GoogleAppsScript.Base.Blob) {
   }
   return currentFile;
 }
+
+function parseDate(isoDate: string) {
+  const MM = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const iso = isoDate.replace(
+    /(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})\.\d{3}(\w{1,3})/,
+    ($0, $1, $2, $3, $4, $5, $6, $7) => {
+      return (
+        MM[$2 - 1] +
+        ' ' +
+        $3 +
+        ' ' +
+        $1 +
+        ' ' +
+        ($4 % 12) +
+        ':' +
+        $5 +
+        ':' +
+        $6 +
+        (+$4 > 12 ? ' PM' : ' AM') +
+        ' ' +
+        ($7 === 'Z' ? 'GMT' : $7)
+      );
+    }
+  );
+  return new Date(iso);
+}
