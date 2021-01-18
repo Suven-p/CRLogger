@@ -79,6 +79,46 @@ class ClashRoyaleLogger {
     recordData(rows, sheetName, position);
   }
 
+  setWarData() {
+    const clanTag = PropertiesService.getDocumentProperties().getProperty(
+      'CLAN_TAG'
+    );
+    for (let i = 1; i <= 10; i++) {
+      const sheetName = i.toString(10);
+      const header = ['Tag', 'Fame Points', 'Repair Points', 'Boat Battles'];
+      const allWarsData: RiverRaceData[] = this.getAPIData(
+        'clans/' + this.clanTag + '/riverracelog'
+      ).items;
+      const singleWarData = allWarsData[i - 1];
+      const participantClans = singleWarData.standings;
+      const clanWarData = participantClans.find(
+        (clan) => clan.clan.tag === clanTag
+      );
+      const participants = clanWarData.clan.participants;
+      const rowsToRecord = [header];
+      const dateCreated = singleWarData.createdDate;
+      const formattedDate = parseDate(dateCreated);
+      for (const data of participants) {
+        rowsToRecord.push([
+          data.tag,
+          data.fame.toString(),
+          data.repairPoints.toString(),
+          data.boatAttacks.toString(),
+        ]);
+      }
+
+      recordData(rowsToRecord, sheetName, { row: 1, col: 1 });
+      this.spreadsheet
+        .getSheetByName(sheetName)
+        .getRange(1, 7)
+        .setValue('Date created');
+      this.spreadsheet
+        .getSheetByName(sheetName)
+        .getRange(2, 7)
+        .setValue(formattedDate);
+    }
+  }
+
   setDateTime(
     sheetName: string,
     datePosition: Position,

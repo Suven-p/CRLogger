@@ -7,6 +7,7 @@ function updateSheet() {
   const position: Position = { row: 2, col: 5 };
   clashRoyaleLogger.setClanInfo('Summary', position);
   clashRoyaleLogger.setMembersData('Summary', { row: 8, col: 1 });
+  clashRoyaleLogger.setWarData();
   clashRoyaleLogger.setDateTime(
     'Summary',
     { row: 5, col: 10 },
