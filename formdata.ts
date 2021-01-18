@@ -6,7 +6,7 @@ function constructFormData(
   let data = '';
   let payload: number[] = null;
   for (const key in payloadData) {
-    if (payload.hasOwnProperty(key)) {
+    if (payloadData.hasOwnProperty(key)) {
       data += '--' + boundary + '\r\n';
       data +=
         'Content-Disposition: form-data; name="' +
