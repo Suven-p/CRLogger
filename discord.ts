@@ -19,15 +19,12 @@ function uploadImageToDiscord() {
   const blob = images[0].getAs('image/jpeg'); // Get only summary page
   blob.setName(IMAGE_FILE_NAME);
 
-  const payloadObj = {
+  const payload: WebHookFormData = {
     username: WEBHOOK_BOT_USERNAME,
     allowed_mentions: {
       parse: ['roles', 'users'],
     },
-    content: new Date().toString(),
-  };
-  const payload = {
-    payload_json: JSON.stringify(payloadObj),
+    payload_json: JSON.stringify({ content: new Date().toString() }),
   };
 
   postToDiscord(DISCORD_WEBHOOK_URL, blob, payload);
